@@ -14,3 +14,9 @@
 # ActiveSupport::Inflector.inflections(:en) do |inflect|
 #   inflect.acronym "RESTful"
 # end
+
+ActiveSupport::Inflector.inflections(:en) do |inflect|
+    inflect.irregular "persona", "personas"
+    inflect.irregular "articulo", "articulos"
+    inflect.irregular "transferencia", "transferencias"
+end
