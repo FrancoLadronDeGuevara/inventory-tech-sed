@@ -1,0 +1,6 @@
+{
+  "ruby.useLanguageServer": true,
+  "ruby.format": "rubocop",
+  "ruby.intellisense": "rubyLocate",
+  "ruby.lsp.enabled": true
+}

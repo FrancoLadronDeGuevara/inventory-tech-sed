@@ -1,0 +1,18 @@
+es:
+  activerecord:
+    models:
+      persona: "Persona"
+      articulo: "Artículo" 
+      transferencia: "Transferencia"
+    attributes:
+      persona:
+        nombre: "Nombre"
+        apellido: "Apellido"
+      articulo:
+        modelo: "Modelo"
+        marca: "Marca"
+        fecha_ingreso: "Fecha de ingreso"
+      transferencia:
+        fecha_transferencia: "Fecha de transferencia"
+        portador_anterior: "Portador anterior"
+        portador_nuevo: "Portador nuevo"
