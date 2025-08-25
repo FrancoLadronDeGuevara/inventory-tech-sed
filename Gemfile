@@ -51,6 +51,12 @@ group :development, :test do
 
   # Omakase Ruby styling [https://github.com/rails/rubocop-rails-omakase/]
   gem "rubocop-rails-omakase", require: false
+
+  # Use RSpec for tests [https://rspec.info/]
+  gem 'rspec-rails'
+  gem 'factory_bot_rails'
+  # Create fake data for tests and development
+  gem 'faker'
 end
 
 group :development do
@@ -60,6 +66,10 @@ end
 
 group :test do
   # Use system testing [https://guides.rubyonrails.org/testing.html#system-testing]
+  gem "shoulda-matchers"
   gem "capybara"
   gem "selenium-webdriver"
 end
+
+# Pagination solution, works well with Rails and Kaminari views
+gem "kaminari"
