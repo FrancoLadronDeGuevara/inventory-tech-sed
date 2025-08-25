@@ -33,4 +33,22 @@ Transferencia.create!(
 
 puts "2 Transferencias iniciales creadas."
 
+# Crear usuario admin
+admin = User.find_or_create_by(email_address: 'admin@inventario.com') do |user|
+  user.password = 'password123'
+  user.password_confirmation = 'password123'
+  user.role = 'admin'
+end
+
+# Crear usuario normal
+usuario = User.find_or_create_by(email_address: 'usuario@inventario.com') do |user|
+  user.password = 'password123'
+  user.password_confirmation = 'password123'
+  user.role = 'usuario'
+end
+
+puts "Usuarios creados:"
+puts "Admin: admin@inventario.com / password123"
+puts "Usuario: usuario@inventario.com / password123"
+
 puts "Seeds completadas."
