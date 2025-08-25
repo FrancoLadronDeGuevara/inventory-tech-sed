@@ -73,3 +73,5 @@ end
 
 # Pagination solution, works well with Rails and Kaminari views
 gem "kaminari"
+
+gem "syntax_tree", "~> 6.3", :group => :development
