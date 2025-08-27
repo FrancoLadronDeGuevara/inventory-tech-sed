@@ -1,4 +1,5 @@
 class DashboardController < ApplicationController
+  layout "dashboard"
   def index
     redirect_to root_path unless authenticated?
 

@@ -1,0 +1,8 @@
+<div class="border-b bg-white border-gray-300 pl-6 py-2 shadow-sm  text-xl font-bold">
+                Personas
+            </div>
+<ul class="list-disc pl-6">
+  <% @personas.each do |persona| %>
+    <li><%= persona.nombre %></li>
+  <% end %>
+</ul>

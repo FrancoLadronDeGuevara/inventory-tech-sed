@@ -4,37 +4,7 @@
     <h1 class="text-3xl font-bold text-gray-900">Dashboard</h1>
     <p class="text-gray-600">Bienvenido al Sistema de Inventario</p>
   </div>
-  
-  <!-- Stats Cards -->
-  <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-    <div class="bg-white p-6 rounded-lg shadow">
-      <h3 class="text-lg font-semibold text-gray-900">Artículos</h3>
-      <p class="text-3xl font-bold text-blue-600"><%= @total_articulos %></p>
-    </div>
-    
-    <div class="bg-white p-6 rounded-lg shadow">
-      <h3 class="text-lg font-semibold text-gray-900">Personas</h3>
-      <p class="text-3xl font-bold text-green-600"><%= @total_personas %></p>
-    </div>
-    
-    <div class="bg-white p-6 rounded-lg shadow">
-      <h3 class="text-lg font-semibold text-gray-900">Transferencias</h3>
-      <p class="text-3xl font-bold text-purple-600"><%= @total_transferencias %></p>
-    </div>
-  </div>
-  
-  <!-- Navigation -->
-  <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-    <%= link_to articulos_path, class: "block bg-blue-500 hover:bg-blue-600 text-white p-6 rounded-lg text-center transition-colors" do %>
-      <h3 class="text-xl font-semibold">Gestionar Artículos</h3>
-      <p class="text-blue-100">Ver, agregar y gestionar artículos</p>
-    <% end %>
-    
-    <%= link_to personas_path, class: "block bg-green-500 hover:bg-green-600 text-white p-6 rounded-lg text-center transition-colors" do %>
-      <h3 class="text-xl font-semibold">Gestionar Personas</h3>
-      <p class="text-green-100">Ver, agregar y gestionar personas</p>
-    <% end %>
-  </div>
+
   
   <!-- Logout -->
   <div class="mt-8 text-center">
@@ -45,4 +15,10 @@
         },
         class: "inline-block bg-blue-500 hover:bg-red-600 px-6 py-2 rounded-lg transition-colors" %>
   </div>
+</div>
+
+<div class="flex flex-col ml-4">
+  <p>Current user: <%= current_user.inspect %></p>
+  <p>Current user role: <%= current_user&.role.inspect %></p>
+  <p>Session user_id: <%= session[:user_id] %></p>
 </div>

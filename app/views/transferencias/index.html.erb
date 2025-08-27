@@ -1,0 +1,6 @@
+<h1 class="text-2xl font-bold mb-4">Transferencias</h1>
+<ul class="list-disc pl-6">
+    <% @transferencias.each do |transferencia| %>
+        <li><%= transferencia.fecha_transferencia %></li>
+    <% end %>
+</ul>

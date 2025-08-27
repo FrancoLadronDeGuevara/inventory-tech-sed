@@ -10,20 +10,20 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_08_25_112212) do
+ActiveRecord::Schema[8.0].define(version: 2025_08_25_111837) do
   create_table "articulos", force: :cascade do |t|
-    t.string "modelo"
-    t.string "marca"
-    t.date "fecha_ingreso"
+    t.string "modelo", null: false
+    t.string "marca", null: false
+    t.date "fecha_ingreso", null: false
+    t.integer "portador_actual_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.integer "portador_actual_id"
     t.index ["portador_actual_id"], name: "index_articulos_on_portador_actual_id"
   end
 
   create_table "personas", force: :cascade do |t|
-    t.string "nombre"
-    t.string "apellido"
+    t.string "nombre", null: false
+    t.string "apellido", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -52,11 +52,10 @@ ActiveRecord::Schema[8.0].define(version: 2025_08_25_112212) do
   create_table "users", force: :cascade do |t|
     t.string "email_address", null: false
     t.string "password_digest", null: false
+    t.integer "role", default: 0
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.string "role", default: "usuario"
     t.index ["email_address"], name: "index_users_on_email_address", unique: true
-    t.index ["role"], name: "index_users_on_role"
   end
 
   add_foreign_key "articulos", "personas", column: "portador_actual_id"
