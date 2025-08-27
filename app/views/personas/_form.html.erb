@@ -1,0 +1,31 @@
+<% if @persona.errors.any? %>
+  <div class="mb-4 p-4 bg-red-100 border border-red-400 text-red-700 rounded">
+    <h2 class="font-bold">Se encontraron <%= @persona.errors.count %> errores:</h2>
+    <ul class="list-disc pl-6">
+      <% @persona.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+    </ul>
+  </div>
+<% end %>
+
+<%= link_to personas_path, class: "text-gray-600 hover:text-gray-900 inline-flex items-center mb-4" do %>
+  <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"/>
+  </svg>
+  Volver
+<% end %>
+
+<%= form_with(model: @persona, local: true) do |form| %>
+  <div class="mb-4">
+    <%= form.label :nombre, class: "block text-sm font-medium text-gray-700" %>
+    <%= form.text_field :nombre, class: "mt-1 block w-full border rounded-lg p-2" %>
+  </div>
+
+  <div class="mb-4">
+    <%= form.label :apellido, class: "block text-sm font-medium text-gray-700" %>
+    <%= form.text_field :apellido, class: "mt-1 block w-full border rounded-lg p-2" %>
+  </div>
+
+  <%= form.submit "Guardar", class: "bg-gray-800 text-white px-4 py-2 rounded-lg hover:bg-gray-700 cursor-pointer" %>
+<% end %>

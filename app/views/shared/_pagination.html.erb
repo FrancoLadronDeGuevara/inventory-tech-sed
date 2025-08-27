@@ -1,0 +1,32 @@
+<%# app/views/shared/_pagination.html.erb %>
+<%# Pasar la variable: paginable = @personas, @articulos, etc. %>
+
+<% return unless paginable.total_pages > 1 %>
+
+<div class="my-4 flex justify-center">
+  <nav class="inline-flex -space-x-px rounded-md shadow-sm" aria-label="Pagination">
+    <%# Botón anterior %>
+    <% if paginable.prev_page %>
+      <%= link_to "← Anterior", url_for(page: paginable.prev_page), class: "px-3 py-1 bg-white border border-gray-300 rounded-l-md hover:bg-gray-100" %>
+    <% else %>
+      <span class="px-3 py-1 bg-gray-200 border border-gray-300 rounded-l-md text-gray-400 cursor-not-allowed">← Anterior</span>
+    <% end %>
+
+    <%# Botones de página %>
+    <% paginable.total_pages.times do |i| %>
+      <% page = i + 1 %>
+      <% if page == paginable.current_page %>
+        <span class="px-3 py-1 border border-gray-300 bg-gray-900 text-white"><%= page %></span>
+      <% else %>
+        <%= link_to page, url_for(page: page), class: "px-3 py-1 border border-gray-300 hover:bg-gray-100" %>
+      <% end %>
+    <% end %>
+
+    <%# Botón siguiente %>
+    <% if paginable.next_page %>
+      <%= link_to "Siguiente →", url_for(page: paginable.next_page), class: "px-3 py-1 bg-white border border-gray-300 rounded-r-md hover:bg-gray-100" %>
+    <% else %>
+      <span class="px-3 py-1 bg-gray-200 border border-gray-300 rounded-r-md text-gray-400 cursor-not-allowed">Siguiente →</span>
+    <% end %>
+  </nav>
+</div>

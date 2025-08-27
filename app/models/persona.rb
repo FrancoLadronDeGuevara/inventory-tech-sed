@@ -11,5 +11,14 @@ class Persona < ApplicationRecord
            foreign_key: :portador_nuevo_id,
            dependent: :nullify
 
-  validates :nombre, :apellido, presence: true
+  validates :nombre, presence: { message: "no puede estar vacio" }
+  validates :nombre, format: {
+    with: /\A[a-zA-ZÁÉÍÓÚáéíóúÑñ\s]+\z/,
+    message: "solo puede contener letras"
+  }
+  validates :apellido, presence: { message: "no puede estar vacio" }
+  validates :apellido, format: {
+    with: /\A[a-zA-ZÁÉÍÓÚáéíóúÑñ\s]+\z/,
+    message: "solo puede contener letras"
+  }
 end
