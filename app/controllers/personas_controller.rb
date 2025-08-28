@@ -4,10 +4,12 @@ class PersonasController < ApplicationController
   before_action :set_persona, only: [ :show, :edit, :update, :destroy ]
 
   def index
-    @personas = Persona.order(:apellido).page(params[:page]).per(5)
+    @personas = Persona.includes(:articulos).order(:apellido).page(params[:page]).per(5)
   end
 
   def show
+    @persona = Persona.includes(articulos: :transferencias).find(params[:id])
+    @historial = @persona.historial_transferencias
   end
 
   def new

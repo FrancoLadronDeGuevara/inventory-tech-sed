@@ -11,14 +11,29 @@ class Persona < ApplicationRecord
            foreign_key: :portador_nuevo_id,
            dependent: :nullify
 
-  validates :nombre, presence: { message: "no puede estar vacio" }
-  validates :nombre, format: {
+  validates :nombre,
+  presence: { message: "no puede estar vacio" },
+  format: {
     with: /\A[a-zA-ZÁÉÍÓÚáéíóúÑñ\s]+\z/,
     message: "solo puede contener letras"
   }
-  validates :apellido, presence: { message: "no puede estar vacio" }
-  validates :apellido, format: {
+
+  validates :apellido,
+  presence: { message: "no puede estar vacio" },
+  format: {
     with: /\A[a-zA-ZÁÉÍÓÚáéíóúÑñ\s]+\z/,
     message: "solo puede contener letras"
   }
+
+  def nombre_completo
+    "#{nombre} #{apellido}"
+  end
+
+  def historial_transferencias
+    Transferencia.where("portador_anterior_id = ? OR portador_nuevo_id = ?", id, id).order(fecha_transferencia: :desc)
+  end
+
+  def articulo_actual
+    articulos.order(fecha_ingreso: :desc)
+  end
 end

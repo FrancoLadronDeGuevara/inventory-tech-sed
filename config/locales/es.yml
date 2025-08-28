@@ -16,3 +16,7 @@ es:
         fecha_transferencia: "Fecha de transferencia"
         portador_anterior: "Portador anterior"
         portador_nuevo: "Portador nuevo"
+  errors:
+    messages:
+      not_found: "No se ha encontrado el recurso solicitado"
+      blank: "no puede estar en blanco"

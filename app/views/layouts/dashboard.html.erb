@@ -30,7 +30,7 @@
 %>
 
 
-  <body>
+  <body x-data="{ openLogout: false }">
     <div class="md:flex">
 
     <!-- sidebar -->
@@ -62,12 +62,21 @@
         <nav class="text-white font-semibold px-4 pt-4 max-h-[calc(100vh-64px)]" x-data="{selected:'<%= current_section %>'}">
             <ul class="flex flex-col space-y-2">
 
-                <!-- Section Devider -->
-                <div class="section border-b pt-4 mb-4 text-xs pb-1 pl-3">
-                    Dashboard
-                </div>
 
-                <!-- List ITEM -->
+                <li class="text-sm">
+                    <%= link_to dashboard_path, class: "flex items-center w-full py-2 px-3 rounded relative hover:text-white hover:bg-gray-900" do %>
+                        <div class="pr-3">
+                            <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z" />
+                            </svg>
+                        </div>
+                        <div>Dashboard</div>
+                    <% end %>
+                    <div class="border-b border-white mt-3 mb-4 mx-2"></div>
+                </li>
+
+
                 <li class="text-sm">
                     <a href="#" @click.prevent="selected = (selected === 'Personas' ? '':'Personas')"
                         class="flex items-center w-full py-1 px-2 rounded relative hover:text-white hover:bg-gray-900">
@@ -133,10 +142,7 @@
                             </li>
                             <!-- Item -->
                             <li class="text-sm ">
-                                <a href="#"
-                                    class="flex items-center w-full py-1 px-2 rounded relative hover:text-white hover:bg-gray-900">
-                                    <div> Crear Articulo </div>
-                                </a>
+                                <%= link_to "Crear Articulo", new_articulo_path, class: 'flex items-center w-full py-1 px-2 rounded relative hover:text-white hover:bg-gray-900' %>
                             </li>
                         </ul>
                     </div>
@@ -173,10 +179,7 @@
                             </li>
                             <!-- Item -->
                             <li class="text-sm ">
-                                <a href="#"
-                                    class="flex items-center w-full py-1 px-2 rounded relative hover:text-white hover:bg-gray-900">
-                                    <div> Crear Transferencia </div>
-                                </a>
+                                <%= link_to "Crear Transferencia", new_transferencia_path, class: 'flex items-center w-full py-1 px-2 rounded relative hover:text-white hover:bg-gray-900' %>
                             </li>
                         </ul>
                     </div>
@@ -294,7 +297,7 @@
                                     aria-orientation="vertical" aria-labelledby="user-menu-button" tabindex="-1">
 
                                         <button 
-                                            @click="$dispatch('open-modal', { id: 'logoutModal' })"
+                                            @click="openLogout = true" 
                                             class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-red-800"
                                             >
                                             Cerrar Sesión
@@ -350,8 +353,8 @@
                     </div>
                     <div class="mt-3 px-2 space-y-1">
                         <button 
-                            @click="$dispatch('open-modal', { id: 'logoutModal' })"
-                            class="block px-4 py-2 text-sm text-white"
+                            @click="openLogout = true" 
+                            class="block px-4 py-2 text-sm text-white mx-auto"
                             >
                             Cerrar Sesión
                         </button>
@@ -373,15 +376,32 @@
             </footer>
         </div>
     </div>
-    <%= render "shared/modal", 
-        modal_id: "logoutModal",
-        title: "Cerrar Sesión",
-        message: "¿Estás seguro de que deseas cerrar sesión?" do %>
+    <div>
+        <div 
+            x-show="openLogout" 
+            class="fixed inset-0 flex items-center justify-center text-center z-50"
+            style="background-color: rgba(0, 0, 0, 0.5); backdrop-filter: blur(5px);"
+        >
+            <div class="bg-white rounded-lg p-6 shadow-lg w-96">
+            <h2 class="text-lg font-bold mb-4">Cerrar Sesión</h2>
+            <p class="mb-4">¿Seguro que deseas cerrar sesión?</p>
 
-    <%= button_to "Cerrar Sesión", session_path, 
+            <div class="flex justify-end space-x-2">
+                <button 
+                class="px-4 py-2 bg-gray-300 rounded"
+                @click="openLogout = false"
+                >
+                Cancelar
+                </button>
+
+                <%= button_to "Cerrar Sesión", session_path, 
                     method: :delete, 
-                    class: "px-4 py-2 rounded-lg bg-red-600 text-white hover:bg-red-700",
+                    class: "px-4 py-2 bg-red-600 text-white rounded",
                     form: { "data-turbo": "false" } %>
-    <% end %>
+            </div>
+            </div>
+        </div>
+    </div>
   </body>
 </html>
+

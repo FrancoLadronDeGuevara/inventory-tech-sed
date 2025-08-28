@@ -1,4 +1,3 @@
-<div>
-  <h1 class="font-bold text-4xl">Articulos#edit</h1>
-  <p>Find me in app/views/articulos/edit.html.erb</p>
-</div>
+<h1>Editar Artículo</h1>
+<%= render "form", articulo: @articulo %>
+<%= link_to "Volver", articulos_path, class: "text-blue-600 underline" %>

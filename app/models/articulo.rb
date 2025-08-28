@@ -5,11 +5,15 @@ class Articulo < ApplicationRecord
 
   validates :modelo, :marca, :fecha_ingreso, presence: true
 
-  def portador_actual
+  def ver_portador_actual
     transferencias.order(:fecha_transferencia).last&.portador_nuevo
   end
 
   def ultima_transferencia
     transferencias.order(fecha_transferencia: :desc).first
+  end
+
+  def historial_portadores
+    transferencias.includes(:portador_anterior, :portador_nuevo).order(fecha_transferencia: :desc)
   end
 end
