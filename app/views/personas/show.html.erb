@@ -1,4 +1,3 @@
-<!-- app/views/personas/show.html.erb -->
 <div class="border-b bg-white border-gray-300 pl-6 py-2 shadow-sm text-xl font-bold">
   <%= @persona.nombre %> <%= @persona.apellido %>
 </div>
@@ -14,7 +13,6 @@
 
 <div class="p-4 space-y-6">
 
-  <!-- Artículos actuales -->
   <div class="bg-white rounded shadow p-4">
     <div class="text-sm text-gray-500 mb-2">Artículos que porta actualmente</div>
       <% if @persona.articulos.any? %>
@@ -33,7 +31,6 @@
       <% end %>
   </div>
 
-  <!-- Historial de transferencias -->
   <div class="bg-white rounded shadow p-4 overflow-x-auto">
     <div class="text-sm text-gray-500 mb-2">Historial de transferencias</div>
     <% if @historial.any? %>

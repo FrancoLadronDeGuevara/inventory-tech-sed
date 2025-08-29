@@ -55,7 +55,6 @@
     <tbody class="bg-white divide-y divide-gray-200">
       <% @articulos.each do |articulo| %>
         <tr x-data="{ open: false }">
-          <!-- Marca con link y icono -->
           <td class="px-6 py-4 whitespace-nowrap flex items-center">
             <%= link_to articulo_path(articulo), class: "hover:underline flex items-center" do %>
               <span><%= articulo.marca %></span>
@@ -67,7 +66,6 @@
 
           <td class="px-6 py-4 whitespace-nowrap"><%= articulo.modelo %></td>
 
-          <!-- Portador actual con icono -->
           <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700 flex items-center">
             <% if articulo.ver_portador_actual.present? %>
               <%= link_to persona_path(articulo.ver_portador_actual), class: "hover:underline flex items-center" do %>
