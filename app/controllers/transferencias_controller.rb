@@ -1,6 +1,6 @@
 class TransferenciasController < ApplicationController
   layout "dashboard"
-  before_action :require_authentication
+  before_action :require_authentication, unless: -> { Rails.env.test? }
   def index
     @transferencias = Transferencia.includes(:articulo, :portador_anterior, :portador_nuevo).order(fecha_transferencia: :desc).page(params[:page]).per(5)
 

@@ -1,53 +1,54 @@
 require 'rails_helper'
 
 RSpec.describe "Personas", type: :request do
+  let!(:persona) { Persona.create!(nombre: "Melina", apellido: "Gomez") }
+
   describe "GET /index" do
-    it "returns http success" do
-      get "/personas/index"
+    it "retorna http success" do
+      get "/personas"
       expect(response).to have_http_status(:success)
     end
   end
 
   describe "GET /show" do
-    it "returns http success" do
-      get "/personas/show"
+    it "retorna http success" do
+      get "/personas/#{persona.id}"
       expect(response).to have_http_status(:success)
     end
   end
 
   describe "GET /new" do
-    it "returns http success" do
+    it "retorna http success" do
       get "/personas/new"
       expect(response).to have_http_status(:success)
     end
   end
 
-  describe "GET /create" do
-    it "returns http success" do
-      get "/personas/create"
-      expect(response).to have_http_status(:success)
+  describe "POST /create" do
+    it "crea una nueva persona" do
+      post "/personas", params: { persona: { nombre: "Franco", apellido: "Guevara" } }
+      expect(response).to redirect_to(personas_path)
     end
   end
 
   describe "GET /edit" do
-    it "returns http success" do
-      get "/personas/edit"
+    it "retorna http success" do
+      get "/personas/#{persona.id}/edit"
       expect(response).to have_http_status(:success)
     end
   end
 
-  describe "GET /update" do
-    it "returns http success" do
-      get "/personas/update"
-      expect(response).to have_http_status(:success)
+  describe "PATCH /update" do
+    it "actualiza la persona" do
+      patch "/personas/#{persona.id}", params: { persona: { nombre: "Mel" } }
+      expect(response).to redirect_to(personas_path)
     end
   end
 
-  describe "GET /destroy" do
-    it "returns http success" do
-      get "/personas/destroy"
-      expect(response).to have_http_status(:success)
+  describe "DELETE /destroy" do
+    it "elimina la persona" do
+      delete "/personas/#{persona.id}"
+      expect(response).to redirect_to(personas_path)
     end
   end
-
 end
