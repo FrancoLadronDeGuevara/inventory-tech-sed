@@ -1,0 +1,20 @@
+<div class="border-b bg-white border-gray-300 pl-6 py-2 shadow-sm text-xl font-bold">
+  Transferencia
+</div>
+
+<div class="my-4 ml-4">
+  <%= link_to transferencias_path, class: "text-gray-600 hover:text-gray-900 flex items-center" do %>
+    <svg class="w-4 h-4 mr-1 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
+            d="M10 19l-7-7m0 0l7-7m-7 7h18"/>
+    </svg>
+    <span>Volver</span>
+  <% end %>
+</div>
+
+<div class="p-4 space-y-4 bg-white rounded shadow">
+  <div><strong>Artículo:</strong> <%= link_to "#{@transferencia.articulo.marca} #{@transferencia.articulo.modelo}", articulo_path(@transferencia.articulo), class: "hover:underline" %></div>
+  <div><strong>Portador anterior:</strong> <%= @transferencia.portador_anterior&.nombre_completo || "-" %></div>
+  <div><strong>Portador nuevo:</strong> <%= link_to @transferencia.portador_nuevo.nombre_completo, persona_path(@transferencia.portador_nuevo), class: "hover:underline" %></div>
+  <div><strong>Fecha transferencia:</strong> <%= @transferencia.fecha_transferencia.strftime("%d/%m/%Y") %></div>
+</div>

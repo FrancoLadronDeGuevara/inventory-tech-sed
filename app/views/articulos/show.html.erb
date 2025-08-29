@@ -1,0 +1,73 @@
+<div class="border-b bg-white border-gray-300 pl-6 py-2 shadow-sm text-xl font-bold">
+  Artículo <%= @articulo.id %>
+</div>
+
+<div class="mt-4 ml-4">
+  <%= link_to articulos_path, class: "text-gray-600 hover:text-gray-900 flex items-center" do %>
+    <svg class="w-4 h-4 mr-1 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"/>
+    </svg>
+    <span>Volver</span>
+  <% end %>
+</div>
+
+<div class="p-4 space-y-6">
+
+  <div class="grid md:grid-cols-2 gap-6">
+    <div class="bg-white rounded shadow p-4">
+      <div class="text-sm text-gray-500 mb-2">Datos básicos</div>
+      <div><span class="font-semibold">Marca:</span> <%= @articulo.marca %></div>
+      <div><span class="font-semibold">Modelo:</span> <%= @articulo.modelo %></div>
+      <div><span class="font-semibold">Ingreso:</span> <%= @articulo.fecha_ingreso %></div>
+      <div><span class="font-semibold">Portador actual:</span> <%= @articulo.portador_actual&.nombre_completo || "-" %></div>
+    </div>
+
+    <div class="bg-white rounded shadow p-4">
+      <div class="text-sm text-gray-500 mb-2">Registrar transferencia</div>
+      <%= form_with model: Transferencia.new, url: transferencias_path, local: true, class: "space-y-4" do |f| %>
+        <%= f.hidden_field :articulo_id, value: @articulo.id %>
+
+        <div class="mb-3">
+          <%= f.label :portador_nuevo_id, "Nuevo portador", class: "block text-sm mb-1" %>
+          <%= f.collection_select :portador_nuevo_id,
+                Persona.order(:apellido, :nombre),
+                :id,
+                :nombre_completo,
+                { prompt: "Seleccione un portador" },
+                class: "border rounded px-2 py-1 w-full" %>
+        </div>
+
+        <div class="mb-3">
+          <%= f.label :fecha_transferencia, "Fecha", class: "block text-sm mb-1" %>
+          <%= f.date_field :fecha_transferencia, value: Date.today, class: "border rounded px-2 py-1 w-full" %>
+        </div>
+
+        <%= f.submit "Transferir", class: "px-4 py-2 bg-gray-900 text-white rounded" %>
+      <% end %>
+
+    </div>
+  </div>
+
+  <div class="bg-white rounded shadow p-4 overflow-x-auto">
+    <div class="text-sm text-gray-500 mb-2">Historial de portadores</div>
+    <table class="w-full divide-y divide-gray-200">
+      <thead class="bg-gray-50">
+        <tr>
+          <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase">Fecha</th>
+          <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase">Pertenecía</th>
+          <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase">Pertenece</th>
+        </tr>
+      </thead>
+      <tbody class="bg-white divide-y divide-gray-200">
+        <% @historial.each do |t| %>
+          <tr>
+            <td class="px-4 py-2"><%= t.fecha_transferencia.strftime("%d/%m/%Y") %></td>
+            <td class="px-4 py-2"><%= t.portador_anterior&.nombre_completo || "Sin portador" %></td>
+            <td class="px-4 py-2"><%= t.portador_nuevo.nombre_completo %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+
+</div>

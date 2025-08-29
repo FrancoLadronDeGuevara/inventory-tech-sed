@@ -1,18 +1,21 @@
 Rails.application.routes.draw do
-  get "dashboard/index"
   root "sessions#new"
 
   resource :session, only: [ :show, :new, :create, :destroy ]
-
   resources :passwords, param: :token
-  get "up" => "rails/health#show", as: :rails_health_check
 
   resources :articulos do
-    resources :transferencias, only: [ :new, :create, :index ]
+    collection { post :import }
   end
 
-  resources :personas
-  resources :transferencias, only: [ :index, :show ]
+  resources :personas do
+    collection { post :import }
+  end
+
+  resources :transferencias do
+    collection { post :import }
+  end
 
   get "dashboard", to: "dashboard#index"
+  get "up" => "rails/health#show", as: :rails_health_check
 end
