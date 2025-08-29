@@ -57,8 +57,6 @@ Los mockups fueron manuscritos por rapidez, sin uso de Figma.
 
 * Transferencia: articulo, portador_anterior, portador_nuevo, fecha_transferencia
 
-![Imagen de relación de modelos.](https://trello.com/1/cards/68ab9acb869d50b4d3f9a73d/attachments/68abc3b7eafa449529ae8e7a/download/image.png "Imagen de relación de modelos.")
-
 
 ### Validaciones:
 
@@ -72,8 +70,13 @@ Los mockups fueron manuscritos por rapidez, sin uso de Figma.
 
 ## 📊 Modelo de datos
 
-* Cada artículo mantiene historial de portadores.
-* Cada persona mantiene historial de artículos portados.
+* Cada artículo tine un **portador actual** y mantiene historial de portadores.
+* Cada persona puede tener **cero o más articulos** y mantiene historial de artículos portados.
+* Un artículo puede ser transferido de una persona a otra.
+* Se debe mantener un **historial de portadores** por artículo.
+* Se debe mantener un **historial de artículos portados** por persona.
+
+![Imagen de relación de modelos](docs/modelos.png)
 
 ## 📋 Planificación
 
@@ -86,6 +89,8 @@ El proyecto se organizó en Trello: [Tablero](https://trello.com/b/y4bbirk7/inve
     * Creación de modelos y migraciones.
     
     * Seeds de ejemplo para pruebas.
+
+    * Desarrollo de login para autenticado de usuario básicos (admin/usuario).
 
     * Desarrollo de controladores y vistas CRUD.
 
@@ -133,7 +138,7 @@ bundle exec rspec
 
 * Las decisiones de diseño fueron rápidas y basadas en mockups manuscritos.
 
-* Las funcionalidades opcionales pueden implementarse sobre la base actual sin grandes cambios.
+* Las funcionalidades opcionales faltantes pueden implementarse sobre la base actual sin grandes cambios.
 
 
 ---
