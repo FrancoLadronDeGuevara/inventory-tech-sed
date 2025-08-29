@@ -5,6 +5,24 @@ class ArticulosController < ApplicationController
   before_action :set_articulo, only: [ :show, :edit, :update, :destroy ]
   def index
      @articulos = Articulo.order(:id).page(params[:page]).per(5)
+
+     respond_to do |format|
+      format.html
+      format.csv do
+        headers["Content-Disposition"] = "attachment; filename=articulos-#{Date.today}.csv"
+        headers["Content-Type"] = "text/csv"
+        render plain: Articulo.to_csv
+      end
+    end
+  end
+
+  def import
+    if params[:file].present?
+      Articulo.import(params[:file])
+      redirect_to articulos_path, notice: "Artículos importados con éxito"
+    else
+      redirect_to articulos_path, alert: "Selecciona un archivo CSV"
+    end
   end
 
   def show
@@ -46,7 +64,7 @@ class ArticulosController < ApplicationController
 
   def destroy
     @articulo.destroy
-    redirect_to articulos_path, notice: "Artículo eliminado."
+    redirect_to articulos_path, notice: "Articulo eliminado."
   end
 
   private

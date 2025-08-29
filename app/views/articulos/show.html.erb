@@ -25,16 +25,27 @@
 
     <div class="bg-white rounded shadow p-4">
       <div class="text-sm text-gray-500 mb-2">Registrar transferencia</div>
-      <%= form_with url: transferencias_path, method: :post, data: { turbo: false } do |f| %>
-        <%= hidden_field_tag :articulo_id, @articulo.id %>
+      <%= form_with model: Transferencia.new, url: transferencias_path, local: true, class: "space-y-4" do |f| %>
+        <%= f.hidden_field :articulo_id, value: @articulo.id %>
+
         <div class="mb-3">
-          <label class="block text-sm mb-1">Nuevo portador</label>
-          <%= select_tag :to_persona_id,
-                options_from_collection_for_select(Persona.order(:apellido, :nombre), :id, :nombre_completo, @articulo.portador_actual_id),
+          <%= f.label :portador_nuevo_id, "Nuevo portador", class: "block text-sm mb-1" %>
+          <%= f.collection_select :portador_nuevo_id,
+                Persona.order(:apellido, :nombre),
+                :id,
+                :nombre_completo,
+                { prompt: "Seleccione un portador" },
                 class: "border rounded px-2 py-1 w-full" %>
         </div>
+
+        <div class="mb-3">
+          <%= f.label :fecha_transferencia, "Fecha", class: "block text-sm mb-1" %>
+          <%= f.date_field :fecha_transferencia, value: Date.today, class: "border rounded px-2 py-1 w-full" %>
+        </div>
+
         <%= f.submit "Transferir", class: "px-4 py-2 bg-gray-900 text-white rounded" %>
       <% end %>
+
     </div>
   </div>
 
@@ -44,15 +55,15 @@
       <thead class="bg-gray-50">
         <tr>
           <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase">Fecha</th>
-          <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase">De</th>
-          <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase">A</th>
+          <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase">Pertenecía</th>
+          <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase">Pertenece</th>
         </tr>
       </thead>
       <tbody class="bg-white divide-y divide-gray-200">
         <% @historial.each do |t| %>
           <tr>
             <td class="px-4 py-2"><%= t.fecha_transferencia.strftime("%d/%m/%Y") %></td>
-            <td class="px-4 py-2"><%= t.portador_anterior&.nombre_completo || "-" %></td>
+            <td class="px-4 py-2"><%= t.portador_anterior&.nombre_completo || "Sin portador" %></td>
             <td class="px-4 py-2"><%= t.portador_nuevo.nombre_completo %></td>
           </tr>
         <% end %>

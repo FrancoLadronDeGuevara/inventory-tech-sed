@@ -13,10 +13,21 @@ es:
         marca: "Marca"
         fecha_ingreso: "Fecha de ingreso"
       transferencia:
+        articulo: "Artículo"
         fecha_transferencia: "Fecha de transferencia"
         portador_anterior: "Portador anterior"
         portador_nuevo: "Portador nuevo"
+    errors:
+      models:
+        persona:
+          attributes:
+            base:
+              restrict_dependent_destroy:
+                has_many: "No se puede eliminar porque tiene transferencias asociadas"
+      messages:
+        record_invalid: "No se puede crear el recurso porque tiene errores"
   errors:
     messages:
       not_found: "No se ha encontrado el recurso solicitado"
       blank: "no puede estar en blanco"
+      required: "debe seleccionarse"

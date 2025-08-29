@@ -5,6 +5,24 @@ class PersonasController < ApplicationController
 
   def index
     @personas = Persona.includes(:articulos).order(:apellido).page(params[:page]).per(5)
+
+    respond_to do |format|
+      format.html
+      format.csv do
+        headers["Content-Disposition"] = "attachment; filename=personas-#{Date.today}.csv"
+        headers["Content-Type"] = "text/csv"
+        render plain: Persona.to_csv
+      end
+    end
+  end
+
+  def import
+  if params[:file].present?
+    Persona.import(params[:file])
+    redirect_to personas_path, notice: "Personas importadas correctamente"
+  else
+    redirect_to personas_path, alert: "Debes seleccionar un archivo CSV"
+  end
   end
 
   def show
@@ -37,8 +55,11 @@ class PersonasController < ApplicationController
   end
 
   def destroy
-    @persona.destroy
-    redirect_to personas_path, notice: "Persona eliminada correctamente."
+    if @persona.destroy
+      redirect_to personas_path, notice: "Persona eliminada correctamente."
+    else
+      redirect_to personas_path, alert: @persona.errors.full_messages.to_sentence
+    end
   end
 
   private
