@@ -1,48 +1,68 @@
-<!-- app/views/dashboard/index.html.erb -->
-<div class="container mx-auto px-4 py-8">
-  <div class="mb-8">
-    <h1 class="text-3xl font-bold text-gray-900">Dashboard</h1>
-    <p class="text-gray-600">Bienvenido al Sistema de Inventario</p>
+<div class="container mx-auto">
+  <div class="border-b bg-white border-gray-300 pl-6 py-2 shadow-sm  text-xl font-bold">
+    Ultimos movimientos
   </div>
-  
-  <!-- Stats Cards -->
-  <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-    <div class="bg-white p-6 rounded-lg shadow">
-      <h3 class="text-lg font-semibold text-gray-900">Artículos</h3>
-      <p class="text-3xl font-bold text-blue-600"><%= @total_articulos %></p>
+
+  <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10 mt-6 px-4">
+    <div class="bg-white shadow rounded-lg p-6 text-center">
+      <p class="text-2xl font-bold text-blue-600"><%= @total_articulos %></p>
+      <p class="text-gray-600">Artículos</p>
     </div>
-    
-    <div class="bg-white p-6 rounded-lg shadow">
-      <h3 class="text-lg font-semibold text-gray-900">Personas</h3>
-      <p class="text-3xl font-bold text-green-600"><%= @total_personas %></p>
+    <div class="bg-white shadow rounded-lg p-6 text-center">
+      <p class="text-2xl font-bold text-green-600"><%= @total_personas %></p>
+      <p class="text-gray-600">Personas</p>
     </div>
-    
-    <div class="bg-white p-6 rounded-lg shadow">
-      <h3 class="text-lg font-semibold text-gray-900">Transferencias</h3>
-      <p class="text-3xl font-bold text-purple-600"><%= @total_transferencias %></p>
+    <div class="bg-white shadow rounded-lg p-6 text-center">
+      <p class="text-2xl font-bold text-purple-600"><%= @total_transferencias %></p>
+      <p class="text-gray-600">Transferencias</p>
     </div>
   </div>
-  
-  <!-- Navigation -->
-  <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-    <%= link_to articulos_path, class: "block bg-blue-500 hover:bg-blue-600 text-white p-6 rounded-lg text-center transition-colors" do %>
-      <h3 class="text-xl font-semibold">Gestionar Artículos</h3>
-      <p class="text-blue-100">Ver, agregar y gestionar artículos</p>
-    <% end %>
-    
-    <%= link_to personas_path, class: "block bg-green-500 hover:bg-green-600 text-white p-6 rounded-lg text-center transition-colors" do %>
-      <h3 class="text-xl font-semibold">Gestionar Personas</h3>
-      <p class="text-green-100">Ver, agregar y gestionar personas</p>
-    <% end %>
-  </div>
-  
-  <!-- Logout -->
-  <div class="mt-8 text-center">
-    <%= link_to "Cerrar Sesión", session_path, 
-        data: {
-          turbo_method: :delete,
-          turbo_confirm: "¿Estás seguro de cerrar sesión?" 
-        },
-        class: "inline-block bg-blue-500 hover:bg-red-600 px-6 py-2 rounded-lg transition-colors" %>
+
+  <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-10 px-4">
+    <div class="bg-white shadow rounded-lg p-6">
+      <h2 class="text-xl font-semibold mb-4">Artículos recientes</h2>
+      <table class="min-w-full text-sm">
+        <thead>
+          <tr class="text-left text-gray-500">
+            <th class="py-2">Modelo</th>
+            <th class="py-2">Marca</th>
+            <th class="py-2">Ingreso</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @articulos_recientes.each do |art| %>
+            <tr class="border-t">
+              <td class="py-2"><%= art.modelo %></td>
+              <td class="py-2"><%= art.marca %></td>
+              <td class="py-2"><%= art.fecha_ingreso.strftime("%d/%m/%Y") %></td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="bg-white shadow rounded-lg p-6">
+      <h2 class="text-xl font-semibold mb-4">Transferencias recientes</h2>
+      <table class="min-w-full text-sm">
+        <thead>
+          <tr class="text-left text-gray-500">
+            <th class="py-2">Artículo</th>
+            <th class="py-2">Pertenecía</th>
+            <th class="py-2">Pertenece</th>
+            <th class="py-2">Fecha</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @transferencias_recientes.each do |t| %>
+            <tr class="border-t">
+              <td class="py-2"><%= t.articulo.modelo %></td>
+              <td class="py-2"><%= t.portador_anterior&.nombre || "N/A" %></td>
+              <td class="py-2"><%= t.portador_nuevo&.nombre %></td>
+              <td class="py-2"><%= t.fecha_transferencia.strftime("%d/%m/%Y") %></td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
   </div>
 </div>

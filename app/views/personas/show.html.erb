@@ -1,0 +1,74 @@
+<!-- app/views/personas/show.html.erb -->
+<div class="border-b bg-white border-gray-300 pl-6 py-2 shadow-sm text-xl font-bold">
+  <%= @persona.nombre %> <%= @persona.apellido %>
+</div>
+
+<div class="mt-4 ml-4">
+  <%= link_to personas_path, class: "text-gray-600 hover:text-gray-900 flex items-center" do %>
+    <svg class="w-4 h-4 mr-1 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"/>
+    </svg>
+    <span>Volver</span>
+  <% end %>
+</div>
+
+<div class="p-4 space-y-6">
+
+  <!-- Artículos actuales -->
+  <div class="bg-white rounded shadow p-4">
+    <div class="text-sm text-gray-500 mb-2">Artículos que porta actualmente</div>
+      <% if @persona.articulos.any? %>
+        <ul class="list-disc pl-6">
+          <% @persona.articulos.each do |articulo| %>
+            <li class="flex items-center space-x-1">
+              <%= link_to "#{articulo.marca} #{articulo.modelo}", articulo_path(articulo), class: "hover:underline" %>
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z" />
+              </svg>
+            </li>
+          <% end %>
+        </ul>
+      <% else %>
+        <div class="text-gray-500">Sin artículos asignados.</div>
+      <% end %>
+  </div>
+
+  <!-- Historial de transferencias -->
+  <div class="bg-white rounded shadow p-4 overflow-x-auto">
+    <div class="text-sm text-gray-500 mb-2">Historial de transferencias</div>
+    <% if @historial.any? %>
+      <table class="w-full divide-y divide-gray-200">
+        <thead class="bg-gray-50">
+          <tr>
+            <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase">Fecha</th>
+            <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase">Artículo</th>
+            <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase">Pertenecía</th>
+            <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase">Pertenece</th>
+          </tr>
+        </thead>
+        <tbody class="bg-white divide-y divide-gray-200">
+          <% @historial.each do |transferencia| %>
+            <tr>
+              <td class="px-4 py-2"><%= transferencia.fecha_transferencia.strftime("%d/%m/%Y") if transferencia.fecha_transferencia %></td>
+              <td class="px-4 py-2 flex items-center space-x-1">
+                <%= link_to "#{transferencia.articulo.marca} #{transferencia.articulo.modelo}", articulo_path(transferencia.articulo), class: "hover:underline" %>
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z" />
+                </svg>
+              </td>
+              <td class="px-4 py-2">
+                <%= transferencia.portador_anterior&.nombre_completo || "-" %>
+              </td>
+              <td class="px-4 py-2">
+                <%= transferencia.portador_nuevo&.nombre_completo || "-" %>
+              </td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    <% else %>
+      <div class="text-gray-500">Sin movimientos.</div>
+    <% end %>
+  </div>
+
+</div>

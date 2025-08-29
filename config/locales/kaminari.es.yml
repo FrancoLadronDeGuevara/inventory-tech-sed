@@ -1,0 +1,11 @@
+es:
+  helpers:
+    page_entries:
+      one: "1 entrada"
+      other: "%{count} entradas"
+  views:
+    pagination:
+      first: "Primera"
+      last: "Última"
+      previous: "← Anterior"
+      next: "Siguiente →"

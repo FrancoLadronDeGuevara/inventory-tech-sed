@@ -6,7 +6,6 @@ class User < ApplicationRecord
 
   enum :role, { usuario: 0, admin: 1 }
 
-  validates :role, presence: true, inclusion: { in: roles.keys }
 
   validates :email_address, presence: true, uniqueness: { case_sensitive: false }, format: { with: URI::MailTo::EMAIL_REGEXP }
   validates :password, presence: true, length: { minimum: 6 }, if: :password_digest_changed?
