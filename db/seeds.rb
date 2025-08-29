@@ -2,8 +2,9 @@
 persona1 = Persona.create!(nombre: "Franco", apellido: "Guevara")
 persona2 = Persona.create!(nombre: "Melina", apellido: "Gomez")
 persona3 = Persona.create!(nombre: "Benjamin", apellido: "Sanchez")
+persona4 = Persona.create!(nombre: "Milo", apellido: "Cossio")
 
-puts "3 Personas creadas."
+puts "4 Personas creadas."
 
 # ---- ARTÍCULOS ----
 articulo1 = Articulo.create!(modelo: "T14", marca: "Lenovo", fecha_ingreso: "2025-08-01")
@@ -31,7 +32,39 @@ Transferencia.create!(
   fecha_transferencia: "2025-08-07"
 )
 
-puts "2 Transferencias iniciales creadas."
+# Tercera transferencia: Franco recibe articulo3
+Transferencia.create!(
+  articulo: articulo3,
+  portador_anterior: nil,
+  portador_nuevo: persona1,
+  fecha_transferencia: "2025-08-08"
+)
+
+# Cuarta transferencia: Franco transfiere articulo3 a Melina
+Transferencia.create!(
+  articulo: articulo3,
+  portador_anterior: persona1,
+  portador_nuevo: persona2,
+  fecha_transferencia: "2025-08-09"
+)
+
+# Quinta transferencia: Benjamin recibe articulo4
+Transferencia.create!(
+  articulo: articulo4,
+  portador_anterior: nil,
+  portador_nuevo: persona3,
+  fecha_transferencia: "2025-08-10"
+)
+
+# Sexta transferencia: Benjamin transfiere articulo4 a Milo
+Transferencia.create!(
+  articulo: articulo4,
+  portador_anterior: persona3,
+  portador_nuevo: persona4,
+  fecha_transferencia: "2025-08-11"
+)
+
+puts "6 Transferencias iniciales creadas."
 
 # Crear usuario admin
 admin = User.find_or_initialize_by(email_address: 'admin@inventario.com')

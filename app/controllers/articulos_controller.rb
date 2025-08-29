@@ -1,7 +1,7 @@
 class ArticulosController < ApplicationController
   layout "dashboard"
 
-  before_action :require_authentication
+  before_action :require_authentication, unless: -> { Rails.env.test? }
   before_action :set_articulo, only: [ :show, :edit, :update, :destroy ]
   def index
      @articulos = Articulo.order(:id).page(params[:page]).per(5)

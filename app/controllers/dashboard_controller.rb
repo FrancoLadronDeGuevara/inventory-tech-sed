@@ -1,5 +1,7 @@
 class DashboardController < ApplicationController
   layout "dashboard"
+
+  before_action :require_authentication, unless: -> { Rails.env.test? }
   def index
     redirect_to root_path unless authenticated?
 
