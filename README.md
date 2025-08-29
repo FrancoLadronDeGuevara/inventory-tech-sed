@@ -16,7 +16,7 @@ Aplicación web para **gestionar artículos y personas**, incluyendo **transfere
 ```bash
 git clone https://github.com/FrancoLadronDeGuevara/inventory-tech-sed.git
 
-cd inventory-system
+cd inventory-tech-sed
 ```
 
 2. Instalar dependencias:
